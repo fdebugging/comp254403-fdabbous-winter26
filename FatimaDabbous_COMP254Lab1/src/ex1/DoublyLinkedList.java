@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package linkedlists;
+package ex1;
 
 /**
  * A basic doubly linked list implementation.
@@ -223,19 +223,39 @@ public class DoublyLinkedList<E> {
     sb.append(")");
     return sb.toString();
   }
+    // Exercise 1: concatenate two doubly linked lists
+  public void concatenate(DoublyLinkedList<E> other) {
+    if (other.isEmpty()) return;
+
+    // connecting this list's last node to the beginning of the other
+    this.trailer.getPrev().setNext(other.header.getNext());
+    other.header.getNext().setPrev(this.trailer.getPrev());
+
+    // updating the trailer and the size
+    this.trailer = other.trailer;
+    this.size += other.size;
+
+    // make sure the other list is empty 
+    other.header.setNext(other.trailer);
+    other.trailer.setPrev(other.header);
+    other.size = 0;
+  }
+
 //main method
   public static void main(String[] args)
-  {
-	  //create and populate a doubly linked list
-	  DoublyLinkedList<String> list = new DoublyLinkedList<String>();
-	  list.addFirst("MSP");
-	  list.addLast("ATL");
-	  list.addLast("BOS");
-	  //
-	  list.addFirst("LAX");
-	  
-	  System.out.println(list);
-	  System.out.println(list.first());
-	  //
+{
+    DoublyLinkedList<String> list1 = new DoublyLinkedList<>();
+    list1.addLast("MSP");
+    list1.addLast("ATL");
+
+    DoublyLinkedList<String> list2 = new DoublyLinkedList<>();
+    list2.addLast("BOS");
+    list2.addLast("LAX");
+
+    list1.concatenate(list2);
+
+    System.out.println(list1);        // (MSP, ATL, BOS, LAX)
+    System.out.println("Size: " + list1.size());
+}
   }
-} //----------- end of DoublyLinkedList class -----------
+ //----------- end of DoublyLinkedList class -----------
