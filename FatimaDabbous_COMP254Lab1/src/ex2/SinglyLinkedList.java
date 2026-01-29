@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package linkedlists;
+package ex2;
 
 /**
  * A basic singly linked list implementation.
@@ -220,18 +220,62 @@ public class SinglyLinkedList<E> implements Cloneable {
     sb.append(")");
     return sb.toString();
   }
-  //main method
-  public static void main(String[] args)
-  {
-	  
-	  SinglyLinkedList<String> list = new SinglyLinkedList<String>();
-	  list.addFirst("MSP");
-	  list.addLast("ATL");
-	  list.addLast("BOS");
-	  //
-	  list.addFirst("LAX");
-	  System.out.println(list);
-	  //
-  }
-  
+  // Exercise 2: swap two nodes 
+public void swapNodes(Node<E> node1, Node<E> node2) {
+    if (node1 == node2 || node1 == null || node2 == null) return;
+
+    Node<E> prev1 = null, prev2 = null;
+    Node<E> curr = head;
+
+    // finding previous nodes
+    while (curr != null && (prev1 == null || prev2 == null)) {
+        if (curr.getNext() == node1) prev1 = curr;
+        if (curr.getNext() == node2) prev2 = curr;
+        curr = curr.getNext();
+    }
+
+    // if node1 is head
+    if (node1 == head) prev1 = null;
+    if (node2 == head) prev2 = null;
+
+    // updating previous links
+    if (prev1 != null) prev1.setNext(node2);
+    else head = node2;
+
+    if (prev2 != null) prev2.setNext(node1);
+    else head = node1;
+
+    // swapping pointers
+    Node<E> temp = node1.getNext();
+    node1.setNext(node2.getNext());
+    node2.setNext(temp);
+
+    // updating tail 
+    if (node1 == tail) tail = node2;
+    else if (node2 == tail) tail = node1;
 }
+
+  //main method
+public static void main(String[] args)
+{
+    SinglyLinkedList<String> list = new SinglyLinkedList<>();
+
+    list.addLast("MSP");
+    list.addLast("ATL");
+    list.addLast("BOS");
+    list.addLast("LAX");
+
+    // we need to reference nodes instesd of elements
+    Node<String> first = list.head;                 // MSP
+    Node<String> third = list.head.getNext().getNext(); // BOS
+
+    System.out.println("Before swap:");
+    System.out.println(list);
+
+    list.swapNodes(first, third);
+
+    System.out.println("After swap:");
+    System.out.println(list);
+}
+}
+
