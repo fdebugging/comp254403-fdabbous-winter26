@@ -180,14 +180,14 @@ public class CircularlyLinkedList<E> {
     sb.append(")");
     return sb.toString();
   }
-  // Exercise 3: clone method
+  // Exercise 3
 public CircularlyLinkedList<E> clone() {
     CircularlyLinkedList<E> other = new CircularlyLinkedList<>();
 
     if (this.size == 0)
         return other;
-// we start at the head
     Node<E> walk = this.tail.getNext(); 
+
     do {
         other.addLast(walk.getElement());
         walk = walk.getNext();
@@ -214,7 +214,6 @@ public CircularlyLinkedList<E> clone() {
     System.out.println("Cloned:");
     System.out.println(copy);
 
-    // we can modify original to prove deep copy
     original.removeFirst();
 
     System.out.println("After modifying original:");

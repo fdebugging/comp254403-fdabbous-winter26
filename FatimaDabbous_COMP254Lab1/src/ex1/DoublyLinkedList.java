@@ -223,19 +223,16 @@ public class DoublyLinkedList<E> {
     sb.append(")");
     return sb.toString();
   }
-    // Exercise 1: concatenate two doubly linked lists
+    // Exercise 1: 
   public void concatenate(DoublyLinkedList<E> other) {
     if (other.isEmpty()) return;
 
-    // connecting this list's last node to the beginning of the other
     this.trailer.getPrev().setNext(other.header.getNext());
     other.header.getNext().setPrev(this.trailer.getPrev());
 
-    // updating the trailer and the size
     this.trailer = other.trailer;
     this.size += other.size;
 
-    // make sure the other list is empty 
     other.header.setNext(other.trailer);
     other.trailer.setPrev(other.header);
     other.size = 0;
@@ -254,8 +251,8 @@ public class DoublyLinkedList<E> {
 
     list1.concatenate(list2);
 
-    System.out.println(list1);        // (MSP, ATL, BOS, LAX)
-    System.out.println("Size: " + list1.size());
+    System.out.println(list1);      
+    
 }
   }
  //----------- end of DoublyLinkedList class -----------
