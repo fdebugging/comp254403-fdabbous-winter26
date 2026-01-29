@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package linkedlists;
+package ex3;
 
 
 /**
@@ -180,24 +180,45 @@ public class CircularlyLinkedList<E> {
     sb.append(")");
     return sb.toString();
   }
+  // Exercise 3: clone method
+public CircularlyLinkedList<E> clone() {
+    CircularlyLinkedList<E> other = new CircularlyLinkedList<>();
+
+    if (this.size == 0)
+        return other;
+// we start at the head
+    Node<E> walk = this.tail.getNext(); 
+    do {
+        other.addLast(walk.getElement());
+        walk = walk.getNext();
+    } while (walk != this.tail.getNext());
+
+    return other;
+}
+
   
 //main method
   public static void main(String[] args)
-  {
-	  
-	  //(LAX, MSP, ATL, BOS)
-	  CircularlyLinkedList<String> circularList = new CircularlyLinkedList<String>();
-	  circularList.addFirst("LAX");
-	  circularList.addLast("MSP");
-	  circularList.addLast("ATL");
-	  circularList.addLast("BOS");
-	  //
-	  System.out.println(circularList);
-	  circularList.removeFirst();
-	  System.out.println(circularList);
-	  circularList.rotate();
-	  System.out.println(circularList);
+{
+    CircularlyLinkedList<String> original = new CircularlyLinkedList<>();
+    original.addLast("LAX");
+    original.addLast("MSP");
+    original.addLast("ATL");
+    original.addLast("BOS");
 
-	  //
-  }
+    CircularlyLinkedList<String> copy = original.clone();
+
+    System.out.println("Original:");
+    System.out.println(original);
+
+    System.out.println("Cloned:");
+    System.out.println(copy);
+
+    // we can modify original to prove deep copy
+    original.removeFirst();
+
+    System.out.println("After modifying original:");
+    System.out.println("Original: " + original);
+    System.out.println("Cloned:   " + copy);
+}
 }
