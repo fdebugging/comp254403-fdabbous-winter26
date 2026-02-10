@@ -32,6 +32,9 @@
 class Exercises {
 
   /** Returns the sum of the integers in given array. */
+  // Big-O: O(n)
+  // Explanation: Single loop runs n times, doing constant-time work each iteration.
+
   public static int example1(int[] arr) {
     int n = arr.length, total = 0;
     for (int j=0; j < n; j++)       // loop from 0 to n-1
@@ -40,6 +43,9 @@ class Exercises {
   }
 
   /** Returns the sum of the integers with even index in given array. */
+  // Big-O: O(n)
+  // Explanation: Loop increments by 2, but still runs proportional to n.
+
   public static int example2(int[] arr) {
     int n = arr.length, total = 0;
     for (int j=0; j < n; j += 2)    // note the increment of 2
@@ -48,6 +54,9 @@ class Exercises {
   }
 
   /** Returns the sum of the prefix sums of given array. */
+  // Big-O: O(n^2)
+  // Explanation: Nested loops where inner loop runs up to j times for each j (triangular sum).
+
   public static int example3(int[] arr) {
     int n = arr.length, total = 0;
     for (int j=0; j < n; j++)       // loop from 0 to n-1
@@ -57,6 +66,9 @@ class Exercises {
   }
 
   /** Returns the sum of the prefix sums of given array. */
+  // Big-O: O(n)
+  // Explanation: Single loop; prefix sum is updated in constant time each iteration.
+
   public static int example4(int[] arr) {
     int n = arr.length, prefix = 0, total = 0;
     for (int j=0; j < n; j++) {     // loop from 0 to n-1
@@ -67,6 +79,9 @@ class Exercises {
   }
 
   /** Returns the number of times second array stores sum of prefix sums from first. */
+  // Big-O: O(n^3)
+  // Explanation: Three nested loops; outer loop runs n times and inner double loop is O(n^2).
+
   public static int example5(int[] first, int[] second) { // assume equal-length arrays
     int n = first.length, count = 0;
     for (int i=0; i < n; i++) {     // loop from 0 to n-1
