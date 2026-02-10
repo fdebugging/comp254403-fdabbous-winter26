@@ -39,7 +39,8 @@ public class UniquenessExperiment {
 
         System.out.println(method + " max n in <= 1 min: " + bestN);
     }
-
+    // unique1 uses a sorted unique array, forcing all pairs to be checked. 
+    // Modern Java optimizations make it run faster than expected, allowing n=150,000.
     private static int[] generateWorstCaseArray(int n) {
         int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
