@@ -29,6 +29,7 @@ public class PrefixAverageExperiment {
     private static double[] generateArray(int n) {
         Random rand = new Random();
         double[] arr = new double[n];
+        // Fill array with random values
         for (int i = 0; i < n; i++) {
             arr[i] = rand.nextDouble();
         }

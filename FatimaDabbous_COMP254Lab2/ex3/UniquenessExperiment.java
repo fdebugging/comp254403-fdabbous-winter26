@@ -12,7 +12,6 @@ public class UniquenessExperiment {
     private static void testAlgorithm(String method) {
         long bestN = 0;
         
-        // Optimized bounds to ensure the search finishes
         long low = 1;
         long high = method.equals("unique1") ? 150_000L : 80_000_000L;
 
@@ -39,8 +38,7 @@ public class UniquenessExperiment {
 
         System.out.println(method + " max n in <= 1 min: " + bestN);
     }
-    // unique1 uses a sorted unique array, forcing all pairs to be checked. 
-    // Modern Java optimizations make it run faster than expected, allowing n=150,000.
+
     private static int[] generateWorstCaseArray(int n) {
         int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
