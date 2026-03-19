@@ -1,5 +1,4 @@
-
-public class ArrayStack<E> implements Stack<E> {
+    public class ArrayStack<E> implements Stack<E> {
     public static final int CAPACITY = 1000;
     private E[] data;
     private int t = -1; // index of top element
@@ -43,6 +42,7 @@ public class ArrayStack<E> implements Stack<E> {
     public String toString() {
         StringBuilder sb = new StringBuilder("(");
         for (int j = 0; j <= t; j++) {  
+            sb.append(data[j]);
             if (j < t) sb.append(", ");
         }
         sb.append(")");
