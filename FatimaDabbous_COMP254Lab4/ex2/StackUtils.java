@@ -1,3 +1,4 @@
+    package ex2;
     public class ArrayStack<E> implements Stack<E> {
     public static final int CAPACITY = 1000;
     private E[] data;

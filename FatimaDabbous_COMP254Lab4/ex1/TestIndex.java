@@ -1,3 +1,4 @@
+package ex1;
 public class TestIndex {
     public static void main(String[] args) {
         LinkedPositionalList<String> list = new LinkedPositionalList<>();

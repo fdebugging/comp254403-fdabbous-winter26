@@ -1,3 +1,4 @@
+package ex1;
 /*
  * Copyright 2014, Michael T. Goodrich, Roberto Tamassia, Michael H. Goldwasser
  *
