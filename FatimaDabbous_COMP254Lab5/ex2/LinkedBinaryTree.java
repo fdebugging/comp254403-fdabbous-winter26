@@ -297,7 +297,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     node.setParent(node);                 // our convention for defunct node
     return temp;
   }
-  
+  // edited code by Fatima + added method
   // Computes and prints height of each subtree using postorder traversal
 public static <E> int printSubtreeHeights(Tree<E> T, Position<E> p) {
     LinkedBinaryTree<E> tree = (LinkedBinaryTree<E>) T;
