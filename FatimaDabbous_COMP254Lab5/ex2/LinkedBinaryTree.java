@@ -21,6 +21,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Concrete implementation of a binary tree using a node-based, linked structure.
  *
@@ -295,46 +298,122 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     return temp;
   }
   
-  
-  
-  
-
-  public static void main(String[] args)
-  {
-	  //create and populate a linked binary tree
-	  LinkedBinaryTree lbt = new LinkedBinaryTree();
-	  Position<String> root =lbt.addRoot("ICET");
-	  
-	  //	  
-	  Position<String> softwarePosition = lbt.addLeft(root, "Software");
-	  Position<String> networkingPosition = lbt.addRight(root, "Networking");
-	  Position<String> set = lbt.addLeft(softwarePosition, "SET");
-	  Position<String> ig = lbt.addRight(softwarePosition, "IG");
-
-	  //
-	  printPreorder(lbt);
-	  parenthesize(lbt, root);
-	  
-	  
-  
-  }
-  /** Prints parenthesized representation of subtree of T rooted at p. */
-  public static <E> void parenthesize(Tree<E> T, Position<E> p) {
-    System.out.print(p.getElement());
-    if (T.isInternal(p)) {
-      boolean firstTime = true;
-      for (Position<E> c : T.children(p)) {
-        System.out.print( (firstTime ? " (" : ", ") ); // determine proper punctuation
-        firstTime = false;                             // any future passes will get comma
-        parenthesize(T, c);                            // recur on child
-      }
-      System.out.print(")");
+  // Computes and prints height of each subtree using postorder traversal
+public static <E> int printSubtreeHeights(Tree<E> T, Position<E> p) {
+    LinkedBinaryTree<E> tree = (LinkedBinaryTree<E>) T;
+    // if leaf node → height = 0
+    if (tree.isLeaf(p)) {
+        System.out.println(p.getElement() + " -> Height: 0");
+        return 0;
     }
-  }
-  //
-  public static <E> void printPreorder(AbstractTree<E> T) {
-	    for (Position<E> p : T.preorder())
-	      System.out.println(p.getElement());
-  }//
 
-} //----------- end of LinkedBinaryTree class -----------
+    int maxHeight = 0;
+
+    // compute height of children first (postorder)
+    for (Position<E> c : T.children(p)) {
+        int childHeight = printSubtreeHeights(T, c);
+        if (childHeight > maxHeight)
+            maxHeight = childHeight;
+    }
+
+    int currentHeight = maxHeight + 1;
+
+    // print current node after children
+    System.out.println(p.getElement() + " -> Height: " + currentHeight);
+
+    return currentHeight;
+}
+
+// ----------------- EDITED BY FATIMA: MISSING METHODS -----------------
+
+  /** Returns true if Position p has no children */
+  public boolean isLeaf(Position<E> p) { // edited by Fatima
+      return numChildren(p) == 0;
+  }
+
+  /** Returns the number of children of Position p */
+  public int numChildren(Position<E> p) { // edited by Fatima
+      int count = 0;
+      Node<E> node = validate(p);
+      if (node.getLeft() != null) count++;
+      if (node.getRight() != null) count++;
+      return count;
+  }
+
+  /** Returns an iterable collection of p's children */
+  public Iterable<Position<E>> children(Position<E> p) { // edited by Fatima
+      List<Position<E>> snapshot = new ArrayList<>();
+      Node<E> node = validate(p);
+      if (node.getLeft() != null) snapshot.add(node.getLeft());
+      if (node.getRight() != null) snapshot.add(node.getRight());
+      return snapshot;
+  }
+
+  /** Returns all nodes of the tree in preorder */
+  public Iterable<Position<E>> preorder() { // edited by Fatima
+      List<Position<E>> snapshot = new ArrayList<>();
+      if (!isEmpty()) preorderSubtree(root, snapshot);
+      return snapshot;
+  }
+
+  /** Helper method for recursive preorder traversal */
+  private void preorderSubtree(Position<E> p, List<Position<E>> snapshot) { // edited by Fatima
+      snapshot.add(p);                     // visit node first
+      for (Position<E> c : children(p)) {  // then visit children
+          preorderSubtree(c, snapshot);
+      }
+  }
+
+  /** Prints preorder traversal to console */
+  public static <E> void printPreorder(LinkedBinaryTree<E> T) { // edited by Fatima
+      for (Position<E> p : T.preorder()) {
+          System.out.println(p.getElement());
+      }
+  }
+
+  /** Prints a parenthesized representation of the tree */
+  public static <E> void parenthesize(LinkedBinaryTree<E> T, Position<E> p) { // edited by Fatima
+      System.out.print(p.getElement());
+      if (!T.isLeaf(p)) {
+          boolean firstTime = true;
+          for (Position<E> c : T.children(p)) {
+              if (firstTime) {
+                  System.out.print(" (");
+                  firstTime = false;
+              } else {
+                  System.out.print(", ");
+              }
+              parenthesize(T, c);
+          }
+          System.out.print(")");
+      }
+  }
+
+
+// -----------------------------------------------------------------------
+// edited main by Fatima
+  public static void main(String[] args)
+{
+    // create and populate linked binary tree
+    LinkedBinaryTree<String> lbt = new LinkedBinaryTree<>();
+
+    Position<String> root = lbt.addRoot("ICET");
+
+    Position<String> softwarePosition = lbt.addLeft(root, "Software");
+    Position<String> networkingPosition = lbt.addRight(root, "Networking");
+
+    Position<String> set = lbt.addLeft(softwarePosition, "SET");
+    Position<String> ig = lbt.addRight(softwarePosition, "IG");
+
+    // preorder output
+    System.out.println("Preorder Traversal:");
+    printPreorder(lbt);
+
+    System.out.println("\nParenthesized Tree:");
+    parenthesize(lbt, root);
+
+    System.out.println("\n\nSubtree Heights (Postorder):");
+    printSubtreeHeights(lbt, root);
+}
+} 
+//----------- end of LinkedBinaryTree class -----------
