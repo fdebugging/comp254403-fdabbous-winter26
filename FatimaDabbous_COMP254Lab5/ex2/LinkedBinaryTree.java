@@ -295,74 +295,46 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     return temp;
   }
   
-  // added code by Fatima.
-    public Position<E> inorderNext(Position<E> p) {
-    validate(p);
-// case 1
-    if (right(p) != null) {
-        Position<E> walk = right(p);
-        while (left(walk) != null) {
-            walk = left(walk);
-        }
-        return walk;
-    }
-// case 2
-    Position<E> walk = p;
-    Position<E> ancestor = parent(walk);
+  
+  
+  
 
-    while (ancestor != null && walk == right(ancestor)) {
-        walk = ancestor;
-        ancestor = parent(ancestor);
-    }
+  public static void main(String[] args)
+  {
+	  //create and populate a linked binary tree
+	  LinkedBinaryTree lbt = new LinkedBinaryTree();
+	  Position<String> root =lbt.addRoot("ICET");
+	  
+	  //	  
+	  Position<String> softwarePosition = lbt.addLeft(root, "Software");
+	  Position<String> networkingPosition = lbt.addRight(root, "Networking");
+	  Position<String> set = lbt.addLeft(softwarePosition, "SET");
+	  Position<String> ig = lbt.addRight(softwarePosition, "IG");
 
-    return ancestor;
+	  //
+	  printPreorder(lbt);
+	  parenthesize(lbt, root);
+	  
+	  
+  
   }
-
-  public static <E> void parenthesize(LinkedBinaryTree<E> T, Position<E> p) {
+  /** Prints parenthesized representation of subtree of T rooted at p. */
+  public static <E> void parenthesize(Tree<E> T, Position<E> p) {
     System.out.print(p.getElement());
     if (T.isInternal(p)) {
       boolean firstTime = true;
       for (Position<E> c : T.children(p)) {
-        System.out.print(firstTime ? " (" : ", ");
-        firstTime = false;
-        parenthesize(T, c);
+        System.out.print( (firstTime ? " (" : ", ") ); // determine proper punctuation
+        firstTime = false;                             // any future passes will get comma
+        parenthesize(T, c);                            // recur on child
       }
       System.out.print(")");
     }
   }
-
+  //
   public static <E> void printPreorder(AbstractTree<E> T) {
-    for (Position<E> p : T.preorder())
-      System.out.println(p.getElement());
-  }
+	    for (Position<E> p : T.preorder())
+	      System.out.println(p.getElement());
+  }//
 
-// main edited by Fatima
-  public static void main(String[] args) {
-    LinkedBinaryTree<String> lbt = new LinkedBinaryTree<>();
-
-    Position<String> root = lbt.addRoot("ICET");
-
-    Position<String> software = lbt.addLeft(root, "Software");
-    Position<String> networking = lbt.addRight(root, "Networking");
-
-    Position<String> set = lbt.addLeft(software, "SET");
-    Position<String> ig = lbt.addRight(software, "IG");
-
-    System.out.println("Inorder Traversal:");
-    for (Position<String> p : lbt.inorder()) {
-        System.out.println(p.getElement());
-    }
-
-    System.out.println("\nTesting inorderNext:");
-
-    Position<String> next = lbt.inorderNext(software);
-    System.out.println("Next after Software = " +
-            (next != null ? next.getElement() : "null"));
-
-    next = lbt.inorderNext(ig);
-    System.out.println("Next after IG = " +
-            (next != null ? next.getElement() : "null"));
-  }
-
-} 
-//----------- end of LinkedBinaryTree class -----------
+} //----------- end of LinkedBinaryTree class -----------
