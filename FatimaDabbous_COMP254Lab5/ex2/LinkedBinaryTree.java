@@ -327,12 +327,12 @@ public static <E> int printSubtreeHeights(Tree<E> T, Position<E> p) {
 // ----------------- EDITED BY FATIMA: MISSING METHODS -----------------
 
   /** Returns true if Position p has no children */
-  public boolean isLeaf(Position<E> p) { // edited by Fatima
+  public boolean isLeaf(Position<E> p) { 
       return numChildren(p) == 0;
   }
 
   /** Returns the number of children of Position p */
-  public int numChildren(Position<E> p) { // edited by Fatima
+  public int numChildren(Position<E> p) { 
       int count = 0;
       Node<E> node = validate(p);
       if (node.getLeft() != null) count++;
@@ -341,7 +341,7 @@ public static <E> int printSubtreeHeights(Tree<E> T, Position<E> p) {
   }
 
   /** Returns an iterable collection of p's children */
-  public Iterable<Position<E>> children(Position<E> p) { // edited by Fatima
+  public Iterable<Position<E>> children(Position<E> p) { 
       List<Position<E>> snapshot = new ArrayList<>();
       Node<E> node = validate(p);
       if (node.getLeft() != null) snapshot.add(node.getLeft());
@@ -350,29 +350,29 @@ public static <E> int printSubtreeHeights(Tree<E> T, Position<E> p) {
   }
 
   /** Returns all nodes of the tree in preorder */
-  public Iterable<Position<E>> preorder() { // edited by Fatima
+  public Iterable<Position<E>> preorder() { 
       List<Position<E>> snapshot = new ArrayList<>();
       if (!isEmpty()) preorderSubtree(root, snapshot);
       return snapshot;
   }
 
   /** Helper method for recursive preorder traversal */
-  private void preorderSubtree(Position<E> p, List<Position<E>> snapshot) { // edited by Fatima
-      snapshot.add(p);                     // visit node first
-      for (Position<E> c : children(p)) {  // then visit children
+  private void preorderSubtree(Position<E> p, List<Position<E>> snapshot) { 
+      snapshot.add(p);                    
+      for (Position<E> c : children(p)) {  
           preorderSubtree(c, snapshot);
       }
   }
 
   /** Prints preorder traversal to console */
-  public static <E> void printPreorder(LinkedBinaryTree<E> T) { // edited by Fatima
+  public static <E> void printPreorder(LinkedBinaryTree<E> T) { 
       for (Position<E> p : T.preorder()) {
           System.out.println(p.getElement());
       }
   }
 
   /** Prints a parenthesized representation of the tree */
-  public static <E> void parenthesize(LinkedBinaryTree<E> T, Position<E> p) { // edited by Fatima
+  public static <E> void parenthesize(LinkedBinaryTree<E> T, Position<E> p) {
       System.out.print(p.getElement());
       if (!T.isLeaf(p)) {
           boolean firstTime = true;
