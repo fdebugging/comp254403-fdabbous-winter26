@@ -23,8 +23,6 @@
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * An implementation of a sorted map using a balanceable binary search tree.
@@ -206,17 +204,41 @@ public class TreeMap<K,V> extends AbstractSortedMap<K,V> {
    * @param p  a position of the tree serving as root of a subtree
    * @return Position holding key, or last node reached during search
    */
-  private Position<Entry<K,V>> treeSearch(Position<Entry<K,V>> p, K key) {
+
+ // ORIGINAL METHOD (MUST KEEP 
+private Position<Entry<K,V>> treeSearch(Position<Entry<K,V>> p, K key) {
     if (isExternal(p))
-      return p;                          // key not found; return the final leaf
+        return p;
+
     int comp = compare(key, p.getElement());
+
     if (comp == 0)
-      return p;                          // key found; return its position
+        return p;
     else if (comp < 0)
-      return treeSearch(left(p), key);   // search left subtree
+        return treeSearch(left(p), key);
     else
-      return treeSearch(right(p), key);  // search right subtree
-  }
+        return treeSearch(right(p), key);
+}
+
+
+// METHOD ADDED BY FATIMA 
+private Position<Entry<K,V>> treeSearchIterative(Position<Entry<K,V>> p, K key) {
+    Position<Entry<K,V>> walk = p;
+
+    while (!isExternal(walk)) {
+        int comp = compare(key, walk.getElement());
+
+        if (comp == 0) {
+            return walk;
+        } else if (comp < 0) {
+            walk = left(walk);
+        } else {
+            walk = right(walk);
+        }
+    }
+
+    return walk; // not found
+}
 
   /**
    * Returns position with the minimal key in the subtree rooted at Position p.
@@ -505,45 +527,33 @@ public class TreeMap<K,V> extends AbstractSortedMap<K,V> {
     }
   }
 
-  public static void main (String[] args)
-  {
-	  //create a Binary Search Tree and make a search
-	  TreeMap<Integer,String> map = new TreeMap<Integer,String> ();
-	  map.put(6, "A");
-	  map.put(2, "B");
-	  map.put(4, "C");
-	  map.put(1, "D");
-	  map.put(9, "E");
-	  map.put(8, "F");
-	  //search
-	  System.out.println(map.get(4));	  
-	  System.out.println(map.higherEntry(2));
-	  //print the values
-	  for(String value : map.values()) 
-	  {
-		  System.out.println(value);	  
-	  }
-	  //print the root element
-	  System.out.println("root: "+map.root().getElement());	  
-	  //print both keys and values
-	  System.out.println(map.entrySet());	  
-	  //prints elements in increasing order by keys
-	  for (Position<Entry<Integer,String>> p : map.tree.inorder())
-      	System.out.println(p.getElement());
-	  map.dump();
-	  
-	  //remove the tree node with key 1
-	  map.remove(1);
-	  map.dump();
-	 //insert (4, "COMP")
-	 //insert (11, "SET")
-	 //print it again
-	  map.put(4, "COMP");
-	  map.put(11, "SET");
-	  map.dump();
-	  //get element with key 11
-	  System.out.println(map.get(11));
+//Main method added by Fatima
+public static void main(String[] args) {
+    TreeMap<Integer, String> map = new TreeMap<>();
 
-	  
-  }
+    map.put(6, "A");
+    map.put(2, "B");
+    map.put(4, "C");
+    map.put(1, "D");
+    map.put(9, "E");
+
+    // TEST ITERATIVE SEARCH
+    Position<Entry<Integer,String>> result =
+        map.treeSearchIterative(map.root(), 4);
+
+    if (map.isExternal(result)) {
+        System.out.println("Key not found");
+    } else {
+        System.out.println("Found: " + result.getElement());
+    }
+
+    // EXTRA TESTS 
+    System.out.println("Get(4): " + map.get(4));
+    System.out.println("HigherEntry(2): " + map.higherEntry(2));
+
+    System.out.println("\nAll values:");
+    for(String value : map.values()) {
+        System.out.println(value);
+    }
+}
 }
