@@ -1,3 +1,4 @@
+//Method added by Fatima
 import java.util.*;
 
 public class BottomUpMergeSort {
@@ -43,7 +44,7 @@ public class BottomUpMergeSort {
         return queueOfQueues.poll();
     }
 
-    // MAIN METHOD (TEST)
+    // Main Method Added by Fatima
     public static void main(String[] args) {
         List<Integer> data = Arrays.asList(5, 2, 9, 1, 6, 3);
 
